@@ -46,3 +46,9 @@ def create_post(post: Post):
     return {"data": post_dict}
 
 
+@app.get("/post/{id}")
+def get_post(id: int):
+    post = find_post(id)
+    if post:
+        return post
+    return {"error": "Post not found"}  
