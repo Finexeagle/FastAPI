@@ -52,3 +52,6 @@ def get_post(id: int):
     if post:
         return post
     return {"error": "Post not found"}  
+
+
+
