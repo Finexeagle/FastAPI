@@ -77,11 +77,17 @@ def delete_post(id: int):
     else:
         raise HTTPException(status_code=404, detail="Post with id doesent Exist")
     
-@app.patch("/post/{id}")
+@app.put("/post/{id}")
 def update_post(id: int, updated_post: Post):
     post = find_post(id)
     post_index = get_post_index(id)
-    my_posts[post_index] = updated_post.dict()
-    return {"Post updated": my_posts[post_index]}
+    if post_index is not None:
+        updated_post = updated_post.dict()
+        updated_post['id'] = post['post']['id']
+        my_posts[post_index] = updated_post
+        return {f"Post {updated_post['id']} updated": my_posts[post_index]}
+    else:
+        raise HTTPException(status_code=404, detail="Post with id doesent Exist")
+
     
     
